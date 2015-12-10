@@ -1,39 +1,38 @@
+import java.util.Scanner;
+
 
 public class Horse {
 
 	public static void main(String[] args) {
-//		System.out.println("Enter number of rows: ");
-//		Scanner sc = new Scanner(System.in);
-//		int rowsCount = sc.nextInt();
-//		System.out.println("Enter number of columns: ");
-//		int colsCount = sc.nextInt();
-//		char[][] board = new char[rowsCount][colsCount];
-//		
-//		initializeBoard(board);
-//		
-//		System.out.println("Enter starting coordinares. Enter row number:");
-//		int startRow = sc.nextInt();
-//		
-//		while (startRow > rowsCount || startRow < 1) {
-//			System.out.println("Enter valid row number:");
-//			startRow = sc.nextInt();
-//		}
-//		
-//		System.out.println("Enter column number:");
-//		int startCol = sc.nextInt();
-//		
-//		while (startCol > colsCount || startCol < 1) {
-//			System.out.println("Enter valid column number:");
-//			startCol = sc.nextInt();
-//		}
-//
-//		startRow--;
-//		startCol--;
+		System.out.println("Enter number of rows: ");
+		Scanner sc = new Scanner(System.in);
+		int rowsCount = sc.nextInt();
+		System.out.println("Enter number of columns: ");
+		int colsCount = sc.nextInt();
+		char[][] board = new char[rowsCount][colsCount];
 		
-		int rows = 2;
-		int cols = 4;
-		char[][] board = new char[rows][cols];
-		fillDots(board, 1, 1);
+		initializeBoard(board);
+		
+		System.out.println("Enter starting coordinares. Enter row number:");
+		int startRow = sc.nextInt();
+		
+		while (startRow > rowsCount || startRow < 1) {
+			System.out.println("Enter valid row number:");
+			startRow = sc.nextInt();
+		}
+		
+		System.out.println("Enter column number:");
+		int startCol = sc.nextInt();
+		
+		while (startCol > colsCount || startCol < 1) {
+			System.out.println("Enter valid column number:");
+			startCol = sc.nextInt();
+		}
+
+		startRow--;
+		startCol--;
+		
+		fillDots(board, startRow, startCol);
 		printBorders(board);
 
 	}
