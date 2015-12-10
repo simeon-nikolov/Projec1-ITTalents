@@ -5,22 +5,8 @@ public class MorskiShah {
 	public static void main(String[] args) {
 		char[][] matrix = new char[7][7];
 		boolean[][] populated = new boolean[3][3];
-		boolean winFirst = ((matrix[2][2] == 'x' && matrix[2][4] == 'x' && matrix[2][6] == 'x')
-				|| (matrix[4][2] == 'x' && matrix[4][4] == 'x' && matrix[4][6] == 'x')
-				|| (matrix[6][2] == 'x' && matrix[6][4] == 'x' && matrix[6][6] == 'x')
-				|| (matrix[2][2] == 'x' && matrix[4][2] == 'x' && matrix[6][2] == 'x')
-				|| (matrix[2][4] == 'x' && matrix[4][4] == 'x' && matrix[6][4] == 'x')
-				|| (matrix[2][6] == 'x' && matrix[4][6] == 'x' && matrix[6][6] == 'x')
-				|| (matrix[2][2] == 'x' && matrix[4][4] == 'x' && matrix[6][6] == 'x')
-				|| (matrix[2][6] == 'x' && matrix[4][4] == 'x' && matrix[6][2] == 'x'));
-		boolean winSecond = ((matrix[2][2] == 'o' && matrix[2][4] == 'o' && matrix[2][6] == 'o')
-				|| (matrix[4][2] == 'o' && matrix[4][4] == 'o' && matrix[4][6] == 'o')
-				|| (matrix[6][2] == 'o' && matrix[6][4] == 'o' && matrix[6][6] == 'o')
-				|| (matrix[2][2] == 'o' && matrix[4][2] == 'o' && matrix[6][2] == 'o')
-				|| (matrix[2][4] == 'o' && matrix[4][4] == 'o' && matrix[6][4] == 'o')
-				|| (matrix[2][6] == 'o' && matrix[4][6] == 'o' && matrix[6][6] == 'o')
-				|| (matrix[2][2] == 'o' && matrix[4][4] == 'o' && matrix[6][6] == 'o')
-				|| (matrix[2][6] == 'o' && matrix[4][4] == 'o' && matrix[6][2] == 'o'));
+		boolean winFirst = checkForWin(matrix, 'x');
+		boolean winSecond = checkForWin(matrix, 'o');
 
 		for (int row = 0; row < matrix.length; row++) {
 			for (int col = 0; col < matrix[row].length; col++) {
@@ -179,6 +165,17 @@ public class MorskiShah {
 				}
 			}
 		}
+	}
+
+	private static boolean checkForWin(char[][] matrix, char symbol) {
+		return (matrix[2][2] == symbol && matrix[2][4] == symbol && matrix[2][6] == symbol)
+				|| (matrix[4][2] == symbol && matrix[4][4] == symbol && matrix[4][6] == symbol)
+				|| (matrix[6][2] == symbol && matrix[6][4] == symbol && matrix[6][6] == symbol)
+				|| (matrix[2][2] == symbol && matrix[4][2] == symbol && matrix[6][2] == symbol)
+				|| (matrix[2][4] == symbol && matrix[4][4] == symbol && matrix[6][4] == symbol)
+				|| (matrix[2][6] == symbol && matrix[4][6] == symbol && matrix[6][6] == symbol)
+				|| (matrix[2][2] == symbol && matrix[4][4] == symbol && matrix[6][6] == symbol)
+				|| (matrix[2][6] == symbol && matrix[4][4] == symbol && matrix[6][2] == symbol);
 	}
 
 	static void print(char[][] matrix, int input, char symbol) {
