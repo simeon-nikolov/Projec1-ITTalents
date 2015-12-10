@@ -1,6 +1,5 @@
 import java.util.Scanner;
 
-
 public class Horse {
 
 	public static void main(String[] args) {
@@ -13,7 +12,7 @@ public class Horse {
 		
 		initializeBoard(board);
 		
-		System.out.println("Enter starting coordinares. Enter row number:");
+		System.out.println("Enter starting coordinares.\nEnter row number:");
 		int startRow = sc.nextInt();
 		
 		while (startRow > rowsCount || startRow < 1) {
