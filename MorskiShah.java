@@ -8,24 +8,7 @@ public class MorskiShah {
 		boolean winFirst = checkForWin(matrix, 'x');
 		boolean winSecond = checkForWin(matrix, 'o');
 
-		for (int row = 0; row < matrix.length; row++) {
-			for (int col = 0; col < matrix[row].length; col++) {
-				matrix[row][col] = ' ';
-			}
-		}
-		
-		for (int row = 0; row < matrix.length; row += 2) {
-			for (int col = 1; col < matrix[row].length; col += 2) {
-				matrix[row][col] = '-';
-			}
-		}
-		
-		for (int row = 1; row < matrix.length; row += 2) {
-			for (int col = 0; col < matrix[row].length; col += 2) {
-				matrix[row][col] = '|';
-			}
-		}
-		
+		initializeMatrix(matrix);
 		print(matrix, 22, ' ');
 		System.out.print("1: ");
 		Scanner sc = new Scanner(System.in);
@@ -163,6 +146,26 @@ public class MorskiShah {
 						}
 					}
 				}
+			}
+		}
+	}
+
+	private static void initializeMatrix(char[][] matrix) {
+		for (int row = 0; row < matrix.length; row++) {
+			for (int col = 0; col < matrix[row].length; col++) {
+				matrix[row][col] = ' ';
+			}
+		}
+		
+		for (int row = 0; row < matrix.length; row += 2) {
+			for (int col = 0; col < matrix[row].length; col++) {
+				matrix[row][col] = '-';
+			}
+		}
+		
+		for (int row = 1; row < matrix.length; row += 2) {
+			for (int col = 0; col < matrix[row].length; col += 2) {
+				matrix[row][col] = '|';
 			}
 		}
 	}
