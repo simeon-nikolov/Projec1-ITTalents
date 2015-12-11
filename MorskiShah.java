@@ -104,8 +104,8 @@ public class MorskiShah {
 		System.out.println();
 	}
 
-	private static void printHorizontalLine(int dashCount) {
-		for (int col = 0; col < dashCount; col++) {
+	private static void printHorizontalLine(int lineLenght) {
+		for (int col = 0; col < lineLenght; col++) {
 			System.out.print("-");
 		}
 		
