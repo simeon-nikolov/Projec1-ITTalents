@@ -1,8 +1,12 @@
+import java.util.Locale;
 import java.util.Scanner;
 
 public class MorskiShah {
 
 	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		Locale.setDefault(Locale.US);
+		
 		char[][] matrix = new char[7][7];
 		boolean[][] populated = new boolean[3][3];
 		boolean winFirst = checkForWin(matrix, 'x');
@@ -10,8 +14,8 @@ public class MorskiShah {
 
 		initializeMatrix(matrix);
 		print(matrix, 22, ' ');
+		
 		System.out.print("1: ");
-		Scanner sc = new Scanner(System.in);
 		int choice = sc.nextInt();
 		populated[choice / 10 - 1][choice % 10 - 1] = true;
 		print(matrix, choice, 'x');
@@ -20,12 +24,7 @@ public class MorskiShah {
 		System.out.print("2: ");
 		choice = sc.nextInt();
 		
-		// Тук печатам за проверка условието
-		System.out.println(
-				(!((choice > 10 && choice < 14) || (choice > 20 && choice < 24) || (choice > 30 && choice < 34))));
-		
-		while ((populated[choice / 10 - 1][choice % 10 - 1])
-				|| (!((choice > 10 && choice < 14) || (choice > 20 && choice < 24) || (choice > 30 && choice < 34)))) {
+		while (!checkValidMove(populated, choice)) {
 			System.out.print("2: ");
 			choice = sc.nextInt();
 		}
@@ -36,8 +35,7 @@ public class MorskiShah {
 		// Ход 2 на играч 1
 		System.out.print("1: ");
 		choice = sc.nextInt();
-		while ((populated[choice / 10 - 1][choice % 10 - 1])
-				|| (!((choice > 10 && choice < 14) || (choice > 20 && choice < 24) || (choice > 30 && choice < 34)))) {
+		while (!checkValidMove(populated, choice)) {
 			System.out.print("1: ");
 			choice = sc.nextInt();
 		}
@@ -49,8 +47,7 @@ public class MorskiShah {
 		System.out.print("2: ");
 		choice = sc.nextInt();
 		
-		while ((populated[choice / 10 - 1][choice % 10 - 1])
-				|| (!((choice > 10 && choice < 14) || (choice > 20 && choice < 24) || (choice > 30 && choice < 34)))) {
+		while (!checkValidMove(populated, choice)) {
 			System.out.print("2: ");
 			choice = sc.nextInt();
 		}
@@ -62,8 +59,7 @@ public class MorskiShah {
 		System.out.print("1: ");
 		choice = sc.nextInt();
 		
-		while ((populated[choice / 10 - 1][choice % 10 - 1])
-				|| (!((choice > 10 && choice < 14) || (choice > 20 && choice < 24) || (choice > 30 && choice < 34)))) {
+		while (!checkValidMove(populated, choice)) {
 			System.out.print("1: ");
 			choice = sc.nextInt();
 		}
@@ -71,19 +67,13 @@ public class MorskiShah {
 		print(matrix, choice, 'x');
 		populated[choice / 10 - 1][choice % 10 - 1] = true;
 
-		System.out.println(winFirst);
-		System.out.println(matrix[2][2] == 'x');
-		System.out.println(matrix[2][4] == 'x');
-		System.out.println(matrix[2][6] == 'x');
-
 		if (winFirst) {
 			System.out.println("Печели играч 1");
 		} else {
 			// Ход 3 на играч 2
 			System.out.print("2: ");
 			choice = sc.nextInt();
-			while ((populated[choice / 10 - 1][choice % 10 - 1]) || (!((choice > 10 && choice < 14)
-					|| (choice > 20 && choice < 24) || (choice > 30 && choice < 34)))) {
+			while (!checkValidMove(populated, choice)) {
 				System.out.print("2: ");
 				choice = sc.nextInt();
 			}
@@ -98,8 +88,7 @@ public class MorskiShah {
 				System.out.print("1: ");
 				choice = sc.nextInt();
 				
-				while ((populated[choice / 10 - 1][choice % 10 - 1]) || (!((choice > 10 && choice < 14)
-						|| (choice > 20 && choice < 24) || (choice > 30 && choice < 34)))) {
+				while (!checkValidMove(populated, choice)) {
 					System.out.print("1: ");
 					choice = sc.nextInt();
 				}
@@ -114,8 +103,7 @@ public class MorskiShah {
 					System.out.print("2: ");
 					choice = sc.nextInt();
 					
-					while ((populated[choice / 10 - 1][choice % 10 - 1]) || (!((choice > 10 && choice < 14)
-							|| (choice > 20 && choice < 24) || (choice > 30 && choice < 34)))) {
+					while (!checkValidMove(populated, choice)) {
 						System.out.print("2: ");
 						choice = sc.nextInt();
 					}
@@ -130,8 +118,7 @@ public class MorskiShah {
 						System.out.print("1: ");
 						choice = sc.nextInt();
 						
-						while ((populated[choice / 10 - 1][choice % 10 - 1]) || (!((choice > 10 && choice < 14)
-								|| (choice > 20 && choice < 24) || (choice > 30 && choice < 34)))) {
+						while (checkValidMove(populated, choice)) {
 							System.out.print("1: ");
 							choice = sc.nextInt();
 						}
@@ -148,6 +135,14 @@ public class MorskiShah {
 				}
 			}
 		}
+	}
+
+	private static boolean checkValidMove(boolean[][] populated, int choice) {
+		boolean valid = true;
+		valid = !(populated[choice / 10 - 1][choice % 10 - 1]);
+		valid = ((choice > 10 && choice < 14) || (choice > 20 && choice < 24) || (choice > 30 && choice < 34));
+		
+		return valid;
 	}
 
 	private static void initializeMatrix(char[][] matrix) {
