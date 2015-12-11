@@ -14,8 +14,9 @@ public class MorskiShah {
 		initializeMatrix(matrix);
 		print(matrix);
 		int choice = 0;
+		int movesCount = 0;
 
-		while (!winFirst || !winSecond) {
+		while (true) {
 			// Ход на играч 1
 			System.out.print("1: ");
 			choice = sc.nextInt();
@@ -26,9 +27,15 @@ public class MorskiShah {
 			}
 			
 			makeMove(matrix, choice, 'x');
+			movesCount++;
 			print(matrix);
+			winFirst = checkForWin(matrix, 'x');
+			
+			if (winFirst || movesCount == 9) {
+				break;
+			}
 
-			// Ход на играч2
+			// Ход на играч 2
 			System.out.print("2: ");
 			choice = sc.nextInt();
 
@@ -38,16 +45,26 @@ public class MorskiShah {
 			}
 
 			makeMove(matrix, choice, 'o');
+			movesCount++;
 			print(matrix);
-
-			if (winFirst) {
-				System.out.println("Печели играч 1");
-			} else {
-				if (winSecond) {
-					System.out.println("Печели играч 2");
-				}
+			winSecond = checkForWin(matrix, '0');
+			
+			if (winSecond || movesCount == 9) {
+				break;
 			}
 		}
+		
+		if (winFirst) {
+			System.out.println("Печели играч 1!");
+		} else {
+			if (winSecond) {
+				System.out.println("Печели играч 2!");
+			} else {
+				System.out.println("Равенство!");
+			}
+		} 
+		
+		sc.close();
 	}
 
 	private static void makeMove(char[][] matrix, int choice, char symbol) {
@@ -57,12 +74,22 @@ public class MorskiShah {
 	}
 
 	private static boolean checkValidMove(char[][] matrix, int choice) {
-		boolean valid = true;
 		int row = getRow(choice);
 		int col = getCol(choice);
-		valid = (matrix[row][col] == ' ');
+		
+		if (row < 0 || row > 2) {
+			return false;
+		}
+		
+		if (col < 0 || col > 2) {
+			return false;
+		}
+		
+		if (matrix[row][col] != ' ') {
+			return false;
+		}
 
-		return valid;
+		return true;
 	}
 
 	private static int getCol(int choice) {
@@ -82,12 +109,42 @@ public class MorskiShah {
 	}
 
 	private static boolean checkForWin(char[][] matrix, char symbol) {
-		boolean isWinner = false;
+		if (matrix[0][0] == symbol && matrix[0][1] == symbol && matrix[0][2] == symbol) {
+			return true;
+		}
+		
+		if (matrix[1][0] == symbol && matrix[1][1] == symbol && matrix[1][2] == symbol) {
+			return true;
+		}
+		
+		if (matrix[2][0] == symbol && matrix[2][1] == symbol && matrix[2][2] == symbol) {
+			return true;
+		}
+		
+		if (matrix[0][0] == symbol && matrix[1][0] == symbol && matrix[2][0] == symbol) {
+			return true;
+		}
+		
+		if (matrix[0][1] == symbol && matrix[1][1] == symbol && matrix[2][1] == symbol) {
+			return true;
+		}
+		
+		if (matrix[0][2] == symbol && matrix[1][2] == symbol && matrix[2][2] == symbol) {
+			return true;
+		}
+		
+		if (matrix[0][0] == symbol && matrix[1][1] == symbol && matrix[2][2] == symbol) {
+			return true;
+		}
+		
+		if (matrix[0][2] == symbol && matrix[1][1] == symbol && matrix[2][0] == symbol) {
+			return true;
+		}
 		
 		return false;
 	}
 
-	static void print(char[][] matrix) {
+	private static void print(char[][] matrix) {
 		int lineLenght = matrix[0].length * 4 + 1; // The length of the lines between the rows 
 		
 		printHorizontalLine(lineLenght);

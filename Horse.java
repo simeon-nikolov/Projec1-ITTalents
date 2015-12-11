@@ -33,7 +33,8 @@ public class Horse {
 		
 		fillDots(board, startRow, startCol);
 		printBorders(board);
-
+		
+		sc.close();
 	}
 
 	private static void initializeBoard(char[][] board) {
