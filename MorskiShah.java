@@ -6,143 +6,71 @@ public class MorskiShah {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		Locale.setDefault(Locale.US);
-		
-		char[][] matrix = new char[7][7];
-		boolean[][] populated = new boolean[3][3];
-		boolean winFirst = checkForWin(matrix, 'x');
-		boolean winSecond = checkForWin(matrix, 'o');
+
+		char[][] matrix = new char[3][3];
+		boolean winFirst = false;
+		boolean winSecond = false;
 
 		initializeMatrix(matrix);
-		print(matrix, 22, ' ');
-		
-		System.out.print("1: ");
-		int choice = sc.nextInt();
-		populated[choice / 10 - 1][choice % 10 - 1] = true;
-		print(matrix, choice, 'x');
-		
-		// Ход 1 на играч 2
-		System.out.print("2: ");
-		choice = sc.nextInt();
-		
-		while (!checkValidMove(populated, choice)) {
-			System.out.print("2: ");
-			choice = sc.nextInt();
-		}
-		
-		print(matrix, choice, 'o');
-		populated[choice / 10 - 1][choice % 10 - 1] = true;
-		
-		// Ход 2 на играч 1
-		System.out.print("1: ");
-		choice = sc.nextInt();
-		while (!checkValidMove(populated, choice)) {
-			System.out.print("1: ");
-			choice = sc.nextInt();
-		}
-		
-		print(matrix, choice, 'x');
-		populated[choice / 10 - 1][choice % 10 - 1] = true;
-		
-		// Ход 2 на играч2
-		System.out.print("2: ");
-		choice = sc.nextInt();
-		
-		while (!checkValidMove(populated, choice)) {
-			System.out.print("2: ");
-			choice = sc.nextInt();
-		}
-		
-		print(matrix, choice, 'o');
-		populated[choice / 10 - 1][choice % 10 - 1] = true;
-		
-		// Ход 3 на играч 1
-		System.out.print("1: ");
-		choice = sc.nextInt();
-		
-		while (!checkValidMove(populated, choice)) {
-			System.out.print("1: ");
-			choice = sc.nextInt();
-		}
-		
-		print(matrix, choice, 'x');
-		populated[choice / 10 - 1][choice % 10 - 1] = true;
+		print(matrix);
+		int choice = 0;
 
-		if (winFirst) {
-			System.out.println("Печели играч 1");
-		} else {
-			// Ход 3 на играч 2
-			System.out.print("2: ");
+		while (!winFirst || !winSecond) {
+			// Ход на играч 1
+			System.out.print("1: ");
 			choice = sc.nextInt();
-			while (!checkValidMove(populated, choice)) {
-				System.out.print("2: ");
+			
+			while (!checkValidMove(matrix, choice)) {
+				System.out.print("1: ");
 				choice = sc.nextInt();
 			}
 			
-			print(matrix, choice, 'o');
-			populated[choice / 10 - 1][choice % 10 - 1] = true;
-			
-			if (winSecond) {
-				System.out.println("Печели играч 2");
-			} else {
-				// Ход 4 на играч 1
-				System.out.print("1: ");
+			makeMove(matrix, choice, 'x');
+			print(matrix);
+
+			// Ход на играч2
+			System.out.print("2: ");
+			choice = sc.nextInt();
+
+			while (!checkValidMove(matrix, choice)) {
+				System.out.print("2: ");
 				choice = sc.nextInt();
-				
-				while (!checkValidMove(populated, choice)) {
-					System.out.print("1: ");
-					choice = sc.nextInt();
-				}
-				
-				print(matrix, choice, 'x');
-				populated[choice / 10 - 1][choice % 10 - 1] = true;
+			}
 
-				if (winFirst) {
-					System.out.println("Печели играч 1");
-				} else {
-					// Ход 4 на играч 2
-					System.out.print("2: ");
-					choice = sc.nextInt();
-					
-					while (!checkValidMove(populated, choice)) {
-						System.out.print("2: ");
-						choice = sc.nextInt();
-					}
-					
-					print(matrix, choice, 'o');
-					populated[choice / 10 - 1][choice % 10 - 1] = true;
-					
-					if (winSecond) {
-						System.out.println("Печели играч 2");
-					} else {
-						// Ход 5 на играч 1
-						System.out.print("1: ");
-						choice = sc.nextInt();
-						
-						while (checkValidMove(populated, choice)) {
-							System.out.print("1: ");
-							choice = sc.nextInt();
-						}
-						
-						print(matrix, choice, 'x');
-						populated[choice / 10 - 1][choice % 10 - 1] = true;
+			makeMove(matrix, choice, 'o');
+			print(matrix);
 
-						if (winFirst) {
-							System.out.println("Печели играч 1");
-						} else {
-							System.out.println("Равен резултат");
-						}
-					}
+			if (winFirst) {
+				System.out.println("Печели играч 1");
+			} else {
+				if (winSecond) {
+					System.out.println("Печели играч 2");
 				}
 			}
 		}
 	}
 
-	private static boolean checkValidMove(boolean[][] populated, int choice) {
+	private static void makeMove(char[][] matrix, int choice, char symbol) {
+		int selectedRow = getRow(choice);
+		int selectedCol = getCol(choice);
+		matrix[selectedRow][selectedCol] = symbol;
+	}
+
+	private static boolean checkValidMove(char[][] matrix, int choice) {
 		boolean valid = true;
-		valid = !(populated[choice / 10 - 1][choice % 10 - 1]);
-		valid = ((choice > 10 && choice < 14) || (choice > 20 && choice < 24) || (choice > 30 && choice < 34));
-		
+		int row = getRow(choice);
+		int col = getCol(choice);
+		valid = (matrix[row][col] == ' ');
+
 		return valid;
+	}
+
+	private static int getCol(int choice) {
+		return (choice % 10) - 1;
+	}
+
+	private static int getRow(int choice) {
+		return (choice / 10) - 1;
 	}
 
 	private static void initializeMatrix(char[][] matrix) {
@@ -151,43 +79,37 @@ public class MorskiShah {
 				matrix[row][col] = ' ';
 			}
 		}
-		
-		for (int row = 0; row < matrix.length; row += 2) {
-			for (int col = 0; col < matrix[row].length; col++) {
-				matrix[row][col] = '-';
-			}
-		}
-		
-		for (int row = 1; row < matrix.length; row += 2) {
-			for (int col = 0; col < matrix[row].length; col += 2) {
-				matrix[row][col] = '|';
-			}
-		}
 	}
 
 	private static boolean checkForWin(char[][] matrix, char symbol) {
-		return (matrix[2][2] == symbol && matrix[2][4] == symbol && matrix[2][6] == symbol)
-				|| (matrix[4][2] == symbol && matrix[4][4] == symbol && matrix[4][6] == symbol)
-				|| (matrix[6][2] == symbol && matrix[6][4] == symbol && matrix[6][6] == symbol)
-				|| (matrix[2][2] == symbol && matrix[4][2] == symbol && matrix[6][2] == symbol)
-				|| (matrix[2][4] == symbol && matrix[4][4] == symbol && matrix[6][4] == symbol)
-				|| (matrix[2][6] == symbol && matrix[4][6] == symbol && matrix[6][6] == symbol)
-				|| (matrix[2][2] == symbol && matrix[4][4] == symbol && matrix[6][6] == symbol)
-				|| (matrix[2][6] == symbol && matrix[4][4] == symbol && matrix[6][2] == symbol);
+		boolean isWinner = false;
+		
+		return false;
 	}
 
-	static void print(char[][] matrix, int input, char symbol) {
-		int coordX = input / 10 * 2 - 1;
-		int coordY = input % 10 * 2 - 1;
-		matrix[coordX][coordY] = symbol;
-
+	static void print(char[][] matrix) {
+		int lineLenght = matrix[0].length * 4 + 1; // The length of the lines between the rows 
+		
+		printHorizontalLine(lineLenght);
+		
 		for (int row = 0; row < matrix.length; row++) {
 			for (int col = 0; col < matrix[row].length; col++) {
-				System.out.print(matrix[row][col] + " ");
+				System.out.print("| " + matrix[row][col] + " ");
 			}
 			
-			System.out.println();
+			System.out.println("|");
+			printHorizontalLine(lineLenght);
 		}
+		
+		System.out.println();
+	}
+
+	private static void printHorizontalLine(int dashCount) {
+		for (int col = 0; col < dashCount; col++) {
+			System.out.print("-");
+		}
+		
+		System.out.println();
 	}
 
 }
