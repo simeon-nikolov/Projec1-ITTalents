@@ -54,6 +54,12 @@ public class MorskiShah {
 			}
 		}
 		
+		printWinMessage(winFirst, winSecond); 
+		
+		sc.close();
+	}
+
+	private static void printWinMessage(boolean winFirst, boolean winSecond) {
 		if (winFirst) {
 			System.out.println("Печели играч 1!");
 		} else {
@@ -62,9 +68,7 @@ public class MorskiShah {
 			} else {
 				System.out.println("Равенство!");
 			}
-		} 
-		
-		sc.close();
+		}
 	}
 
 	private static void makeMove(char[][] matrix, int choice, char symbol) {
