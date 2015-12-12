@@ -2,34 +2,29 @@ import java.util.Locale;
 import java.util.Scanner;
 
 public class TicTacToe {
-
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
+	private Scanner sc = new Scanner(System.in);
+	private char[][] matrix = new char[3][3];
+	private boolean winFirst = false;        
+	private boolean winSecond = false;
+	
+	public TicTacToe() {
 		Locale.setDefault(Locale.US);
-
-		char[][] matrix = new char[3][3];
-		boolean winFirst = false;
-		boolean winSecond = false;
-
-		initializeMatrix(matrix);
-		print(matrix);
+		initializeMatrix();
+	}
+	
+	public void run() {		
+		printBoard();
 		int choice = 0;
 		int movesCount = 0;
-
+		
 		while (true) {
 			// Ход на играч 1
 			System.out.print("1: ");
-			choice = sc.nextInt();
-			
-			while (!checkValidMove(matrix, choice)) {
-				System.out.print("1: ");
-				choice = sc.nextInt();
-			}
-			
-			makeMove(matrix, choice, 'x');
+			choice = this.getInput(1);
+			makeMove(choice, 'x');
 			movesCount++;
-			print(matrix);
-			winFirst = checkForWin(matrix, 'x');
+			printBoard();
+			winFirst = checkForWin('x');
 			
 			if (winFirst || movesCount == 9) {
 				break;
@@ -37,47 +32,52 @@ public class TicTacToe {
 
 			// Ход на играч 2
 			System.out.print("2: ");
-			choice = sc.nextInt();
-
-			while (!checkValidMove(matrix, choice)) {
-				System.out.print("2: ");
-				choice = sc.nextInt();
-			}
-
-			makeMove(matrix, choice, 'o');
+			choice = this.getInput(2);
+			makeMove(choice, 'o');
 			movesCount++;
-			print(matrix);
-			winSecond = checkForWin(matrix, '0');
+			printBoard();
+			winSecond = checkForWin('o');
 			
 			if (winSecond || movesCount == 9) {
 				break;
 			}
 		}
 		
-		printWinMessage(winFirst, winSecond); 
-		
-		sc.close();
+		printWinMessage();
 	}
 
-	private static void printWinMessage(boolean winFirst, boolean winSecond) {
-		if (winFirst) {
+	private int getInput(int player) {
+		int input = sc.nextInt();
+		
+		while (!checkValidMove(input)) {
+			System.out.print(player + ": ");
+			input = sc.nextInt();
+		}
+		
+		return input;
+	}
+
+	private void printWinMessage() {
+		if (this.winFirst) {
 			System.out.println("Печели играч 1!");
 		} else {
-			if (winSecond) {
+			if (this.winSecond) {
 				System.out.println("Печели играч 2!");
 			} else {
 				System.out.println("Равенство!");
 			}
 		}
+		
+		System.out.println();
 	}
 
-	private static void makeMove(char[][] matrix, int choice, char symbol) {
+	private void makeMove(int choice, char symbol) {
 		int selectedRow = getRow(choice);
 		int selectedCol = getCol(choice);
 		matrix[selectedRow][selectedCol] = symbol;
 	}
 
-	private static boolean checkValidMove(char[][] matrix, int choice) {
+	private boolean checkValidMove(int choice) {
 		int row = getRow(choice);
 		int col = getCol(choice);
 		
@@ -96,15 +96,15 @@ public class TicTacToe {
 		return true;
 	}
 
-	private static int getCol(int choice) {
+	private int getCol(int choice) {
 		return (choice % 10) - 1;
 	}
 
-	private static int getRow(int choice) {
+	private int getRow(int choice) {
 		return (choice / 10) - 1;
 	}
 
-	private static void initializeMatrix(char[][] matrix) {
+	private void initializeMatrix() {
 		for (int row = 0; row < matrix.length; row++) {
 			for (int col = 0; col < matrix[row].length; col++) {
 				matrix[row][col] = ' ';
@@ -112,7 +112,7 @@ public class TicTacToe {
 		}
 	}
 
-	private static boolean checkForWin(char[][] matrix, char symbol) {
+	private boolean checkForWin(char symbol) {
 		if (matrix[0][0] == symbol && matrix[0][1] == symbol && matrix[0][2] == symbol) {
 			return true;
 		}
@@ -148,7 +148,7 @@ public class TicTacToe {
 		return false;
 	}
 
-	private static void print(char[][] matrix) {
+	private void printBoard() {
 		int lineLenght = matrix[0].length * 4 + 1; // The length of the lines between the rows 
 		
 		printHorizontalLine(lineLenght);
@@ -165,7 +165,7 @@ public class TicTacToe {
 		System.out.println();
 	}
 
-	private static void printHorizontalLine(int lineLenght) {
+	private void printHorizontalLine(int lineLenght) {
 		for (int col = 0; col < lineLenght; col++) {
 			System.out.print("-");
 		}
