@@ -56,7 +56,7 @@ public class TextCrypter {
 			if ((coords1[0] != coords2[0]) && (coords1[1] == coords2[1])) {
 				int firstLetterRow = coords1[0] + 1;
 				int firstLetterCol = coords1[1];
-				int secondLetterRow = coords1[0] + 1;
+				int secondLetterRow = coords2[0] + 1;
 				int secondLetterCol = coords2[1];
 				
 				if (firstLetterRow >= ENCRYPTING_MATRIX.length) {
