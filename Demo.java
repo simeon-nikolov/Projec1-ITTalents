@@ -21,8 +21,8 @@ public class Demo {
 				break;
 			case 3:
 				System.out.println("Enter message to decrypt: ");
-				String decryptedText = sc.next();
-				System.out.println(decryptText(decryptedText));
+				String encryptedText = sc.next();
+				System.out.println(decryptText(encryptedText));
 				break;
 			case 4:
 				System.out.println();
@@ -56,7 +56,7 @@ public class Demo {
 
 	public static String decryptText(String text) {
 		TextCrypter crypter = new TextCrypter();
-		String decryptedText = null; // Still not implemented - To Do
+		String decryptedText = crypter.decrypt(text);
 		return decryptedText;
 	}
 
