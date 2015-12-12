@@ -76,13 +76,13 @@ public class TextCrypter {
 		return encryptedText;
 	}
 	
-	public String decrypt(String encryption) {
-		encryption = encryption.toUpperCase();
+	public String decrypt(String encryptedText) {
+		encryptedText = encryptedText.toUpperCase();
 		String decryptedText = "";
 		
-		for (int index = 0; index < encryption.length(); index += 2) {
-			int[] coords1 = this.getCoords(encryption.charAt(index));
-			int[] coords2 = this.getCoords(encryption.charAt(index + 1));
+		for (int index = 0; index < encryptedText.length(); index += 2) {
+			int[] coords1 = this.getCoords(encryptedText.charAt(index));
+			int[] coords2 = this.getCoords(encryptedText.charAt(index + 1));
 			
 			// 1. if they are on different rows and cols
 			if ((coords1[0] != coords2[0]) && (coords1[1] != coords2[1])) {
