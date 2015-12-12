@@ -1,6 +1,6 @@
 
 public class TextCrypter {
-	private static final char EXTRA_SYMBOL = 'P'; // additional letter to add in the end if the text length is odd
+	private static final char EXTRA_SYMBOL = 'Q'; // additional letter to add in the end if the text length is odd
 	private static final char[][] ENCRYPTING_MATRIX = {
 		{'B', 'M', 'S', 'J', 'C'},
 		{'I', 'F', 'N', 'T', 'E'},
