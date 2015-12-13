@@ -140,7 +140,7 @@ public class TextCrypter {
 			decryptedText = decryptedText.substring(0, decryptedText.length() - 1);
 		}
 		
-		return decryptedText;
+		return decryptedText.toLowerCase();
 	}
 	
 	private int[] getCoords(char symbol) {

@@ -31,7 +31,8 @@ public class Horse {
 		startRow--;
 		startCol--;
 		
-		fillDots(board, startRow, startCol);
+		int moves = 0;
+		fillDots(board, startRow, startCol, moves);
 		printBorders(board);
 		
 		sc.close();
@@ -45,7 +46,7 @@ public class Horse {
 		}
 	}
 
-	static void fillDots(char[][] board, int coordX, int coordY) {
+	static void fillDots(char[][] board, int coordX, int coordY, int moves) {
 		if (coordX < 0 || coordX >= board.length) {
 			return;
 		}
@@ -54,20 +55,26 @@ public class Horse {
 			return;
 		}
 		
-		if (board[coordX][coordY] == '.') {
+		if (board[coordX][coordY] != ' ') {
 			return;
 		}
 		
-		board[coordX][coordY] = '.';
+		if (moves == 0) {
+			board[coordX][coordY] = '\u2658';
+		} else {
+			board[coordX][coordY] = '\u265E';
+		}
 		
-		fillDots(board, coordX - 2, coordY - 1);
-		fillDots(board, coordX - 2, coordY + 1);
-		fillDots(board, coordX - 1, coordY - 2);
-		fillDots(board, coordX - 1, coordY + 2);
-		fillDots(board, coordX + 2, coordY - 1);
-		fillDots(board, coordX + 2, coordY + 1);
-		fillDots(board, coordX + 1, coordY - 2);
-		fillDots(board, coordX + 1, coordY + 2);
+		moves++;
+		
+		fillDots(board, coordX - 2, coordY - 1, moves);
+		fillDots(board, coordX - 2, coordY + 1, moves);
+		fillDots(board, coordX - 1, coordY - 2, moves);
+		fillDots(board, coordX - 1, coordY + 2, moves);
+		fillDots(board, coordX + 2, coordY - 1, moves);
+		fillDots(board, coordX + 2, coordY + 1, moves);
+		fillDots(board, coordX + 1, coordY - 2, moves);
+		fillDots(board, coordX + 1, coordY + 2, moves);
 
 	}
 

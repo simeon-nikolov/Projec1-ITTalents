@@ -18,11 +18,13 @@ public class Demo {
 				System.out.println("Enter message to encrypt: ");
 				String text = sc.next();
 				System.out.println(encryptText(text));
+				System.out.println();
 				break;
 			case 3:
 				System.out.println("Enter message to decrypt: ");
 				String encryptedText = sc.next();
 				System.out.println(decryptText(encryptedText));
+				System.out.println();
 				break;
 			case 4:
 				System.out.println();
