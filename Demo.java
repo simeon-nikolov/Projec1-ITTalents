@@ -27,6 +27,7 @@ public class Demo {
 				System.out.println();
 				break;
 			case 4:
+				findKnightPath();
 				System.out.println();
 				break;
 			}
@@ -63,7 +64,8 @@ public class Demo {
 	}
 
 	public static void findKnightPath() {
-		// TO DO
+		Horse knightPathFinder = new Horse();
+		knightPathFinder.findPath();
 	}
 
 }

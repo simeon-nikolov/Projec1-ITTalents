@@ -1,19 +1,31 @@
 import java.util.Scanner;
 
 public class Horse {
+	private static final char BLACK_KNIGHT_UNICODE = '\u265E';
+	private static final char WHITE_KNIGHT_UNICODE = '\u2658';
+	
+	private char[][] board;
+	private int startRow;
+	private int startCol;
+	
+	public void findPath() {
+		getInputData();
+		fillBoard(startRow, startCol);
+		this.board[startRow][startCol] = WHITE_KNIGHT_UNICODE;
+		printBoard();
+	}
 
-	public static void main(String[] args) {
-		System.out.println("Enter number of rows: ");
+	private void getInputData() {
 		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter number of rows: ");
 		int rowsCount = sc.nextInt();
 		System.out.println("Enter number of columns: ");
 		int colsCount = sc.nextInt();
-		char[][] board = new char[rowsCount][colsCount];
-		
+		this.board = new char[rowsCount][colsCount];
 		initializeBoard(board);
-		
-		System.out.println("Enter starting coordinares.\nEnter row number:");
-		int startRow = sc.nextInt();
+		System.out.println("Enter starting coordinares.");
+		System.out.println("Enter row number:");
+		startRow = sc.nextInt();
 		
 		while (startRow > rowsCount || startRow < 1) {
 			System.out.println("Enter valid row number:");
@@ -21,7 +33,7 @@ public class Horse {
 		}
 		
 		System.out.println("Enter column number:");
-		int startCol = sc.nextInt();
+		startCol = sc.nextInt();
 		
 		while (startCol > colsCount || startCol < 1) {
 			System.out.println("Enter valid column number:");
@@ -30,12 +42,6 @@ public class Horse {
 
 		startRow--;
 		startCol--;
-		
-		int moves = 0;
-		fillDots(board, startRow, startCol, moves);
-		printBorders(board);
-		
-		sc.close();
 	}
 
 	private static void initializeBoard(char[][] board) {
@@ -46,7 +52,7 @@ public class Horse {
 		}
 	}
 
-	static void fillDots(char[][] board, int coordX, int coordY, int moves) {
+	private void fillBoard(int coordX, int coordY) {
 		if (coordX < 0 || coordX >= board.length) {
 			return;
 		}
@@ -55,63 +61,41 @@ public class Horse {
 			return;
 		}
 		
-		if (board[coordX][coordY] != ' ') {
+		if (this.board[coordX][coordY] != ' ') {
 			return;
 		}
 		
-		if (moves == 0) {
-			board[coordX][coordY] = '\u2658';
-		} else {
-			board[coordX][coordY] = '\u265E';
-		}
+		this.board[coordX][coordY] = BLACK_KNIGHT_UNICODE;
 		
-		moves++;
-		
-		fillDots(board, coordX - 2, coordY - 1, moves);
-		fillDots(board, coordX - 2, coordY + 1, moves);
-		fillDots(board, coordX - 1, coordY - 2, moves);
-		fillDots(board, coordX - 1, coordY + 2, moves);
-		fillDots(board, coordX + 2, coordY - 1, moves);
-		fillDots(board, coordX + 2, coordY + 1, moves);
-		fillDots(board, coordX + 1, coordY - 2, moves);
-		fillDots(board, coordX + 1, coordY + 2, moves);
-
+		fillBoard(coordX - 2, coordY - 1);
+		fillBoard(coordX - 2, coordY + 1);
+		fillBoard(coordX - 1, coordY - 2);
+		fillBoard(coordX - 1, coordY + 2);
+		fillBoard(coordX + 2, coordY - 1);
+		fillBoard(coordX + 2, coordY + 1);
+		fillBoard(coordX + 1, coordY - 2);
+		fillBoard(coordX + 1, coordY + 2);
 	}
 
-	static void print(char[][] x) {		
-		for (int row = 0; row < x.length; row++) {
-			for (int col = 0; col < x[row].length; col++) {
-				System.out.print(x[row][col] + " ");
+	private void printBoard() {
+		int lineLenght = this.board[0].length * 4 + 1; // The length of the lines between the rows 
+		printHorizontalLine(lineLenght);
+		
+		for (int row = 0; row < board.length; row++) {
+			for (int col = 0; col < board[row].length; col++) {
+				System.out.print("| " + board[row][col] + " ");
 			}
 			
-			System.out.println();
+			System.out.println("|");
+			printHorizontalLine(lineLenght);
 		}
-
 	}
-
-	static void printBorders(char[][] board) {
-		char[][] outputBoard = new char[board.length * 2 + 1][board[0].length * 2 + 1];
-		
-		initializeBoard(outputBoard);
-		
-		for (int row = 0; row < outputBoard.length; row += 2) {
-			for (int col = 0; col < outputBoard[row].length; col++) {
-				outputBoard[row][col] = '-';
-			}
+	
+	private void printHorizontalLine(int lineLenght) {
+		for (int col = 0; col < lineLenght; col++) {
+			System.out.print("-");
 		}
 		
-		for (int row = 1; row < outputBoard.length; row += 2) {
-			for (int col = 0; col < outputBoard[row].length; col++) {
-				outputBoard[row][col] = '|';
-			}
-		}
-		
-		for (int row = 1; row < outputBoard.length; row += 2) {
-			for (int col = 1; col < outputBoard[row].length; col += 2) {
-				outputBoard[row][col] = board[row / 2][col / 2];
-			}
-		}
-		
-		print(outputBoard);
+		System.out.println();
 	}
 }
