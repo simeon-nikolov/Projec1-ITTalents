@@ -33,6 +33,9 @@ public class Demo {
 			}
 		} while (choice != 5);
 		
+		System.out.println();
+		System.out.println("Goodbye!");
+		
 		sc.close();
 	}
 

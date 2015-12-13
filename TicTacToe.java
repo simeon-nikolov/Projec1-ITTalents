@@ -149,11 +149,20 @@ public class TicTacToe {
 	}
 
 	private void printBoard() {
-		int lineLenght = matrix[0].length * 4 + 1; // The length of the lines between the rows 
+		System.out.print("  ");
 		
+		for (int col = 0; col < matrix[0].length; col++) {
+			System.out.print("  " + (col + 1) + " ");
+		}
+		
+		System.out.println();
+		
+		int lineLenght = matrix[0].length * 4 + 1; // The length of the lines between the rows 
 		printHorizontalLine(lineLenght);
 		
 		for (int row = 0; row < matrix.length; row++) {
+			System.out.print((row + 1) + " ");
+			
 			for (int col = 0; col < matrix[row].length; col++) {
 				System.out.print("| " + matrix[row][col] + " ");
 			}
@@ -166,6 +175,8 @@ public class TicTacToe {
 	}
 
 	private void printHorizontalLine(int lineLenght) {
+		System.out.print("  "); // left padding - two intervals
+		
 		for (int col = 0; col < lineLenght; col++) {
 			System.out.print("-");
 		}
