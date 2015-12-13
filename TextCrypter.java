@@ -10,6 +10,11 @@ public class TextCrypter {
 	};
 	
 	public String encrypt(String text) {
+		if (text == null) {
+			System.out.println("Text is null!");
+			return "";
+		}
+		
 		if (text.length() % 2 == 1) {
 			text = text + EXTRA_SYMBOL;
 		}
@@ -77,6 +82,11 @@ public class TextCrypter {
 	}
 	
 	public String decrypt(String encryptedText) {
+		if (encryptedText == null) {
+			System.out.println("Text is null!");
+			return "";
+		}
+		
 		encryptedText = encryptedText.toUpperCase();
 		String decryptedText = "";
 		
