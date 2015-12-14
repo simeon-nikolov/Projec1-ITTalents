@@ -1,2 +1,2 @@
-# Projec1-ITTalents
+# Project1-ITTalents
 First Project
